@@ -1,0 +1,4 @@
+# AEP Recovery Lab runtime dependency
+# The recovery engine is built around the py_aep parser and applies tolerant-reader patches.
+py-aep==0.15.0
+PyYAML>=6.0
