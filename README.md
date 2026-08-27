@@ -2,7 +2,7 @@
 
 A professional forensic recovery suite and interactive project inspector for Adobe After Effects (`.aep`) files.
 
-> **Note**: This is a **vibecoded** project created with AI assistance, with the entire concept, architectural design, forensic recovery strategy, and technical orchestration directed and orchestrated by **[@Shrey0079868](https://github.com/Shrey0079868)**.
+> **Note**: This is a **vibecoded** project created with AI assistance, with the entire concept created by me : **[@Shrey](https://github.com/Shrey0079868)**.
 
 Treats the **damaged AEP as authoritative** to preserve all recent work (compositions, layers, effects, transforms) beyond old autosaves, while repairing corrupt chunk boundaries and healing effect tables so the recovered project opens cleanly in Adobe After Effects.
 
