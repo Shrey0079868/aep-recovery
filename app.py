@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-import json, uuid, sys, urllib.parse, traceback
+import json, uuid, sys, urllib.parse
 ROOT = Path(__file__).resolve().parent
 UPLOADS = ROOT / 'uploads'
 UPLOADS.mkdir(exist_ok=True)
@@ -57,7 +57,11 @@ class Handler(BaseHTTPRequestHandler):
             fname = Path(urllib.parse.unquote(path[len('/download/'):])).name
             p = UPLOADS / fname
             if p.exists():
-                self.send(p.read_bytes(), 'application/octet-stream', headers={'Content-Disposition': f'attachment; filename="{fname}"'})
+                self.send(
+                    p.read_bytes(),
+                    'application/octet-stream',
+                    headers={'Content-Disposition': f'attachment; filename="{fname}"'}
+                )
                 return
         self.send('Not found', 'text/plain', 404)
 
@@ -69,6 +73,7 @@ class Handler(BaseHTTPRequestHandler):
             files = multipart(body, ctype)
             parsed = urllib.parse.urlparse(self.path)
             path = parsed.path
+
             if path == '/api/recover':
                 if not files:
                     raise ValueError('Please upload the corrupted .aep file.')
@@ -80,6 +85,7 @@ class Handler(BaseHTTPRequestHandler):
                 report['download'] = '/download/' + out.name
                 self.send(json.dumps(report, ensure_ascii=False), 'application/json')
                 return
+
             if path in ('/api/preview', '/api/parse'):
                 if not files:
                     raise ValueError('No AEP file supplied for preview.')
@@ -88,6 +94,7 @@ class Handler(BaseHTTPRequestHandler):
                 preview_data = extract_full_project_preview(app, str(target_file))
                 self.send(json.dumps(preview_data, ensure_ascii=False), 'application/json')
                 return
+
             raise ValueError(f'Unknown endpoint: {path}')
         except Exception as e:
             traceback.print_exc()
